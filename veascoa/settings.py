@@ -75,9 +75,12 @@ WSGI_APPLICATION = 'veascoa.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'HOST': '120.48.155.43',
+        'NAME': 'veascoo',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'PASSWORD': 'root'
+    },
 }
 
 
