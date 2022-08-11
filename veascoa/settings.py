@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from sshtunnel import SSHTunnelForwarder
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'base.apps.BaseConfig',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -72,14 +74,25 @@ WSGI_APPLICATION = 'veascoa.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+# 0.通过SSH连接云服务器
+server = SSHTunnelForwarder(
+    ssh_address_or_host='120.48.155.43',  # 跳板机B地址
+    ssh_port=22,  # 跳板机B端口
+    ssh_username='root',
+    ssh_password='Po^hFZuo',
+    # local_bind_address=('127.0.0.1', 22),  # 这里必须填127.0.0.1
+    remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
+)
+server.start()
 
 DATABASES = {
     'default': {
-        'HOST': '120.48.155.43',
-        'NAME': 'veascoo',
         'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'veascoo',
         'USER': 'root',
-        'PASSWORD': 'root'
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': server.local_bind_port,
     },
 }
 
