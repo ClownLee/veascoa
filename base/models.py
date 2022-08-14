@@ -1,4 +1,5 @@
 from django.db import models
+import json
 
 class Users(models.Model):
     id = models.AutoField(primary_key=True)
@@ -10,3 +11,6 @@ class Users(models.Model):
     class Meta:
         db_table = 'users'
         managed = False
+    
+    def toJson(self):
+        return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
