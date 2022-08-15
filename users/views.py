@@ -6,7 +6,7 @@ from django.views.decorators.http import require_http_methods
 from . import models
 
 # Create your views here.
-class Base(View):
+class Users(View):
 
     @require_http_methods(['POST'])
     def addUser(request):
@@ -116,10 +116,10 @@ class Base(View):
         id = req.get('id')
         if id != None and isinstance(id, int) and id > 0:
             print('okokook')
-            res = Base.getUserOne(id=id)
+            res = Users.getUserOne(id=id)
         else:
             page = req.get('page')
             size = req.get('size')
-            res = Base.getUsersList(page=page, size=size)
+            res = Users.getUsersList(page=page, size=size)
 
         return JsonResponse({ 'code': 0, 'data': res, 'message': '操作成功' })

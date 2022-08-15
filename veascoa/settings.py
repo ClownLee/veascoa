@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'base.apps.BaseConfig',
+    'users.apps.UsersConfig',
+    'admins.apps.AdminsConfig',
     # 'django.contrib.admin',
     # 'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,6 +77,15 @@ WSGI_APPLICATION = 'veascoa.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # 0.通过SSH连接云服务器
 
+
+datebase_config = {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'veascoo',
+    'USER': 'root',
+    'PASSWORD': 'root',
+    'HOST': '127.0.0.1',
+}
+
 if os.environ['PY_ENV'] != 'production':
 
     server = SSHTunnelForwarder(
@@ -83,20 +93,13 @@ if os.environ['PY_ENV'] != 'production':
         ssh_port=22,  # 跳板机B端口
         ssh_username='root',
         ssh_password='Po^hFZuo',
-        # local_bind_address=('127.0.0.1', 22),  # 这里必须填127.0.0.1
         remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
     )
     server.start()
+    datebase_config['PORT'] = server.local_bind_port
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'veascoo',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        #'PORT': server.local_bind_port,
-    },
+    'default': datebase_config,
 }
 
 
