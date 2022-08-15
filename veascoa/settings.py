@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from sshtunnel import SSHTunnelForwarder
 
@@ -75,15 +75,18 @@ WSGI_APPLICATION = 'veascoa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # 0.通过SSH连接云服务器
-server = SSHTunnelForwarder(
-    ssh_address_or_host='120.48.155.43',  # 跳板机B地址
-    ssh_port=22,  # 跳板机B端口
-    ssh_username='root',
-    ssh_password='Po^hFZuo',
-    # local_bind_address=('127.0.0.1', 22),  # 这里必须填127.0.0.1
-    remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
-)
-server.start()
+
+if os.environ['PY_ENV'] != 'production':
+
+    server = SSHTunnelForwarder(
+        ssh_address_or_host='120.48.155.43',  # 跳板机B地址
+        ssh_port=22,  # 跳板机B端口
+        ssh_username='root',
+        ssh_password='Po^hFZuo',
+        # local_bind_address=('127.0.0.1', 22),  # 这里必须填127.0.0.1
+        remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
+    )
+    server.start()
 
 DATABASES = {
     'default': {
@@ -92,7 +95,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
-        'PORT': server.local_bind_port,
+        #'PORT': server.local_bind_port,
     },
 }
 
