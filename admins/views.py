@@ -15,23 +15,23 @@ class Admins(View):
             req = json.loads(request.body.decode('utf-8'))
 
             username = req.get('username')
-            if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]{5,11}$', username) == None:
+            if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]{5,11}$', str(username)) == None:
                 raise Exception('用户名6-12个字符且必须以字母或下划线开头')
 
             phone = req.get('phone')
-            if re.match(r'^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$', phone) == None:
+            if re.match(r'^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$', str(phone)) == None:
                 raise Exception('手机号码输入错误')
 
             email = req.get('email')
-            if re.match(r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)$', email) == None:
+            if re.match(r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)$', str(email)) == None:
                 raise Exception('邮箱输入错误')
 
             password = req.get('password')
-            if re.match(r"^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{8,}$", password) == None:
+            if re.match(r"^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{8,}$", str(password)) == None:
                 raise Exception('密码至少8位含大小写字母、数字、特殊符号的字符')
 
             avator = req.get('avator')
-            if avator != None and len(avator) > 0 and re.match(r'^http(s)?:\/\/([\w.]+\/?)\S*', avator) == None:
+            if avator != None and len(avator) > 0 and re.match(r'^http(s)?:\/\/([\w.]+\/?)\S*', str(avator)) == None:
                 raise Exception('头像地址错误')
 
             admins = models.Admins(username=username, phone=phone, email=email, password=password, avator=avator)
