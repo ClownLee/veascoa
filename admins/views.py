@@ -56,6 +56,13 @@ class Admins(View):
                 else:
                     raise Exception('用户名6-12个字符且必须以字母或下划线开头')
 
+            is_del = req.get('is_del')
+            if is_del != None:
+                if int(is_del) == 0 or int(is_del) == 1:
+                    user.is_del = is_del
+                else:
+                    raise Exception('删除/启用账号失败')
+
             phone = req.get('phone')
             if phone != None:
                 if len(phone) > 0 and re.match(r'^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$', phone) != None:
