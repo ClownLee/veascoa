@@ -20,4 +20,6 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('admins/', include('admins.urls')),
+    path('maps/', include('maps.urls')),
+    path('baseinfo/', include('base_info.urls')),
 ]

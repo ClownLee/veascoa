@@ -98,9 +98,11 @@ class Users(View):
             return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
 
     def getUserOne(id):
-        res = models.Users.objects.get(id=id)
-        return res.toJson()
-
+        try:
+            res = models.Users.objects.get(id=id)
+            return res.toJson()
+        except:
+            return []
 
     def getUsersList(page, size):
 

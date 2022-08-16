@@ -98,14 +98,18 @@ class Admins(View):
             return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
 
     def getAdminOne(id):
-        res = models.Admins.objects.get(id=id)
-        return res.toJson()
+        try:
+            res = models.Admins.objects.get(id=id)
+            return res.toJson()
+        except:
+            return []
 
 
     def getAdminsList(page, size):
 
         res = models.Admins.objects.all()[(page - 1) * size : page * size]
         json = []
+        
         for i in res:
             json.append(i.toJson())
 

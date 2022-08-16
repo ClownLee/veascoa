@@ -3,6 +3,7 @@ import json
 
 class BaseInfo(models.Model):
     id = models.AutoField(primary_key=True)
+    uid = models.BigIntegerField()
     is_del = models.SmallIntegerField(default=0)
     is_master = models.SmallIntegerField(default=0)
     avator = models.CharField(max_length=255)
@@ -17,6 +18,7 @@ class BaseInfo(models.Model):
     graduated_from = models.CharField(max_length=255)
     graduated_time = models.DateTimeField()
     education = models.CharField(max_length=255)
+    major = models.CharField(max_length=255)
     self_evaluation = models.TextField()
     class Meta:
         db_table = 'base_info'
