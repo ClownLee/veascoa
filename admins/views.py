@@ -122,7 +122,6 @@ class Admins(View):
         req = json.loads(request.body.decode('utf-8'))
         id = req.get('id')
         if id != None and isinstance(id, int) and id > 0:
-            print('okokook')
             res = Admins.getAdminOne(id=id)
         else:
             page = req.get('page')
