@@ -4,6 +4,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from . import models
+from utils.constants.index import IS_DEL
 
 # Create your views here.
 class Admins(View):
@@ -58,7 +59,7 @@ class Admins(View):
 
             is_del = req.get('is_del')
             if is_del != None:
-                if int(is_del) == 0 or int(is_del) == 1:
+                if int(is_del) in IS_DEL.keys():
                     user.is_del = is_del
                 else:
                     raise Exception('删除/启用账号失败')

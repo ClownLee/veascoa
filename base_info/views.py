@@ -4,6 +4,10 @@ from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from . import models
+from utils.constants.index import IS_MASTER
+from utils.constants.sex import SEX
+from utils.constants.politic import POLITIC
+from utils.constants.nation import NATION
 
 # Create your views here.
 class BaseInfo(View):
@@ -14,7 +18,7 @@ class BaseInfo(View):
             req = json.loads(request.body.decode('utf-8'))
 
             is_master = req.get('is_master')
-            if is_master != None and int(is_master) not in [0, 1]:
+            if is_master != None and int(is_master) not in IS_MASTE.keys():
                 raise Exception('请设置正确的是否主数据值')
 
             avator = req.get('avator')
@@ -26,7 +30,7 @@ class BaseInfo(View):
                 raise Exception('用户名6-12个字符且必须以字母或下划线开头')
     
             sex = req.get('sex')
-            if sex not in ['男', '女']:
+            if sex not in SEX.keys():
                 raise Exception('请选择性别')
             
             birthday = req.get('birthday')
@@ -42,12 +46,16 @@ class BaseInfo(View):
                 raise Exception('手机号码输入错误')
 
             political_outlook = req.get('political_outlook')
-            if political_outlook == None:
-                raise Exception('手机号码输入错误')
+            if str(political_outlook) not in POLITIC.keys():
+                raise Exception('政治面貌输入错误')
 
             nation = req.get('nation')
-            if re.match(r'^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$', str(nation)) == None:
-                raise Exception('手机号码输入错误')
+            if str(nation) not in NATION.keys():
+                raise Exception('民族输入错误')
+
+            address = req.get('address')
+            if str(address) == None or len(address) <= 0:
+                raise Exception('常住地址错误')
 
             return JsonResponse({ "code": 0, "data": [], "message": "操作成功" })
         except Exception as e:

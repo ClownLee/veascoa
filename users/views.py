@@ -4,7 +4,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from . import models
-from consts.views import SYS_CONSTS
+from utils.constants.index import IS_DEL
 
 # Create your views here.
 class Users(View):
@@ -59,7 +59,7 @@ class Users(View):
 
             is_del = req.get('is_del')
             if is_del != None:
-                if int(is_del) == 0 or int(is_del) == 1:
+                if int(is_del) in IS_DEL.keys():
                     user.is_del = is_del
                 else:
                     raise Exception('删除/启用账号失败')
@@ -120,7 +120,6 @@ class Users(View):
     
     @require_http_methods(['GET'])
     def getUsers(request):
-        print(0 in SYS_CONSTS.IS_DEL)
         req = json.loads(request.body.decode('utf-8'))
         id = req.get('id')
         if id != None and isinstance(id, int) and id > 0:
