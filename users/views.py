@@ -4,6 +4,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from . import models
+from django.db.models import Q
 from utils.constants.index import IS_DEL
 
 # Create your views here.
@@ -132,3 +133,24 @@ class Users(View):
             res = Users.getUsersList(page=page, size=size)
 
         return JsonResponse({ 'code': 0, 'data': res, 'message': '操作成功' })
+    
+    @require_http_methods(['POST'])
+    def login(request):
+        try:
+            req = json.loads(request.body.decode('utf-8'))
+            username = req.get('username')
+            if str(username) in ['', None]:
+                raise Exception('账号不存在')
+            
+            password = req.get('password')
+            if str(password) in ['', None]:
+                raise Exception('密码不存在')
+
+            res = models.BaseInfo.objects.get(
+                Q(username=username) | Q(email=username) | Q(phone=username)
+            )
+
+            
+            return JsonResponse({ 'code': 0, 'data': res, 'message': '操作成功' })
+        except Exception as e:
+            return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
