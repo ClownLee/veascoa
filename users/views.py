@@ -151,6 +151,6 @@ class Users(View):
             )
 
             
-            return JsonResponse({ 'code': 0, 'data': res, 'message': '操作成功' })
+            return JsonResponse({ 'code': 0, 'data': res.toJson(), 'message': '操作成功' })
         except Exception as e:
             return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
