@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 import json
 
 class Admins(models.Model):
@@ -17,5 +18,11 @@ class Admins(models.Model):
         managed = False
         ordering = ('-create_time',)
     
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.create_time = timezone.now()
+        self.update_time = timezone.now()
+        super(Admins, self).save(*args, **kwargs)
+
     def toJson(self):
         return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
