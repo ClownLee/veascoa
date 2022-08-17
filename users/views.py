@@ -146,7 +146,7 @@ class Users(View):
             if str(password) in ['', None]:
                 raise Exception('密码不存在')
 
-            res = models.BaseInfo.objects.get(
+            res = models.Users.objects.get(
                 Q(username=username) | Q(email=username) | Q(phone=username)
             )
 
