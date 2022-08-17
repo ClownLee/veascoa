@@ -10,11 +10,12 @@ class Admins(models.Model):
     avator = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
-    create_time = models.DateTimeField()
-    update_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
     class Meta:
         db_table = 'admins'
         managed = False
+        ordering = ('-create_time',)
     
     def toJson(self):
         return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])

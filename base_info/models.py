@@ -20,11 +20,12 @@ class BaseInfo(models.Model):
     education = models.CharField(max_length=255)
     major = models.CharField(max_length=255)
     self_evaluation = models.TextField()
-    create_time = models.DateTimeField()
-    update_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
     class Meta:
         db_table = 'base_info'
         managed = False
+        ordering = ('-create_time',)
     
     def toJson(self):
         return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
