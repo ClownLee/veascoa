@@ -23,7 +23,7 @@ class BaseInfo(View):
                 raise Exception('请指定用户ID')
             
             is_master = req.get('is_master')
-            if is_master != None and int(is_master) not in IS_MASTE.keys():
+            if is_master != None and int(is_master) not in IS_MASTER.keys():
                 raise Exception('请设置正确的是否主数据值')
             else:
                 is_master = 0
