@@ -9,7 +9,7 @@ class BaseInfo(models.Model):
     avator = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     sex = models.CharField(max_length=255)
-    birthday = models.CharField(max_length=255)
+    birthday = models.DateTimeField()
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     political_outlook = models.CharField(max_length=255)
@@ -20,6 +20,8 @@ class BaseInfo(models.Model):
     education = models.CharField(max_length=255)
     major = models.CharField(max_length=255)
     self_evaluation = models.TextField()
+    create_time = models.DateTimeField()
+    update_time = models.DateTimeField()
     class Meta:
         db_table = 'base_info'
         managed = False

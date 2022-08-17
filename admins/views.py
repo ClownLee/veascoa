@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from . import models
 from utils.constants.index import IS_DEL
+from utils.tools.index import Tools
 
 # Create your views here.
 class Admins(View):
@@ -30,12 +31,15 @@ class Admins(View):
             password = req.get('password')
             if re.match(r"^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{8,}$", str(password)) == None:
                 raise Exception('密码至少8位含大小写字母、数字、特殊符号的字符')
+            else:
+                salt=Tools.random(5)
+                password = Tools.md5(password, salt)
 
             avator = req.get('avator')
             if avator != None and len(avator) > 0 and re.match(r'^http(s)?:\/\/([\w.]+\/?)\S*', str(avator)) == None:
                 raise Exception('头像地址错误')
 
-            admins = models.Admins(username=username, phone=phone, email=email, password=password, avator=avator)
+            admins = models.Admins(username=username, phone=phone, email=email, password=password, salt=salt, avator=avator)
             admins.save()
             return JsonResponse({ "code": 0, "data": [], "message": "操作成功" })
         except Exception as e:
