@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 import json
 
 class BaseInfo(models.Model):
@@ -27,12 +26,6 @@ class BaseInfo(models.Model):
         db_table = 'base_info'
         managed = False
         ordering = ('-create_time',)
-    
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.create_time = timezone.now()
-        self.update_time = timezone.now()
-        super(BaseInfo, self).save(*args, **kwargs)
 
     def toJson(self):
         return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
