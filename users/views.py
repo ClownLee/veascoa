@@ -149,8 +149,8 @@ class Users(View):
             res = models.Users.objects.get(
                 Q(username=username) | Q(email=username) | Q(phone=username)
             )
-            user = res.toJson()
-            if user.password == password:
+            if res.password == password:
+                user = res.toJson()
                 return JsonResponse({ 'code': 0, 'data': user, 'message': '操作成功' })
             else:
                 raise Exception('密码错误')
