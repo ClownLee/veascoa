@@ -154,8 +154,10 @@ class Users(View):
                 Q(username=username) | Q(email=username) | Q(phone=username)
             )
             if res.password == Tools.md5(password, res.salt):
-                del res.salt, res.password
                 
+                del res.password
+                del res.salt
+
                 user = res.toJson()
                 return JsonResponse({ 'code': 0, 'data': user, 'message': '操作成功' })
             else:
