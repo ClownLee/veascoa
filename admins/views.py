@@ -138,3 +138,30 @@ class Admins(View):
             res = Admins.getAdminsList(page=page, size=size)
 
         return JsonResponse({ 'code': 0, 'data': res, 'message': '操作成功' })
+    
+    @require_http_methods(['POST'])
+    def login(request):
+        try:
+            req = json.loads(request.body.decode('utf-8'))
+            username = req.get('username')
+            if str(username) in ['', None]:
+                raise Exception('账号不存在')
+            
+            password = req.get('password')
+            if str(password) in ['', None]:
+                raise Exception('密码不存在')
+
+            res = models.Admins.objects.get(
+                Q(username=username) | Q(email=username) | Q(phone=username)
+            )
+            if res.password == Tools.md5(password, res.salt):
+                
+                user = dict(res.toJson())
+                del user['password']
+                del user['salt']
+
+                return JsonResponse({ 'code': 0, 'data': user, 'message': '操作成功' })
+            else:
+                raise Exception('密码错误')
+        except Exception as e:
+            return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
