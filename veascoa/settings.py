@@ -36,12 +36,14 @@ INSTALLED_APPS = [
     'admins.apps.AdminsConfig',
     'base_info.apps.BaseInfoConfig',
     'maps.apps.MapsConfig',
+    'education.apps.EducationConfig',
     # 'django.contrib.admin',
     # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +54,12 @@ MIDDLEWARE = [
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.interceptor.Interceptor', # 请求响应拦截器
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# CORS_ORIGIN_WHITELIST = ('0.0.0.0')
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'veascoa.urls'
 
