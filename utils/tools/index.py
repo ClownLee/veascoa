@@ -17,7 +17,7 @@ class Tools:
     def sign(userinfo):
         encoded_jwt = jwt.encode({
             "exp": str((datetime.datetime.now() + datetime.timedelta(seconds=172800)).strftime('%Y-%m-%d %H:%M:%S')), # 两天后过期
-            "user": dict(userinfo),
+            # "user": dict(userinfo),
         }, SIGN_KEY, ["HS256"])
 
         return encoded_jwt
