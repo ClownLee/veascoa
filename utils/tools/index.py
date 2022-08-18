@@ -2,6 +2,22 @@ import random, hashlib, time, datetime, jwt
 from utils.constants.index import SIGN_KEY
 
 class Tools:
+    def toJson(_self):
+        names = []
+        datas = []
+        for f in _self._meta.fields:
+           names.append(f.name)
+        for attr in names:
+            if attr in ['start_time', 'end_time', 'create_time', 'update_time', 'get_time', 'birthday', 'graduated_time']:
+                value = getattr(_self, attr).strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                value = getattr(_self, attr)
+
+            datas.append((attr, value))
+
+        return dict(datas)
+        # [(attr, getattr(_self, attr)) for attr in [f.name for f in _self._meta.fields]]
+
     def random(len=5):
         return (''.join(random.sample(['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'], len)))
     

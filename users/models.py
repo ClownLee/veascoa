@@ -1,4 +1,5 @@
 from django.db import models
+from utils.tools.index import Tools
 import json
 
 class Users(models.Model):
@@ -18,4 +19,5 @@ class Users(models.Model):
         ordering = ('-create_time',)
     
     def toJson(self):
-        return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
+        return Tools.toJson(self)
+        # return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
