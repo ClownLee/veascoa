@@ -155,10 +155,10 @@ class Users(View):
             )
             if res.password == Tools.md5(password, res.salt):
                 
-                del res.password
-                del res.salt
+                user = dict(res.toJson())
+                del user['password']
+                del user['salt']
 
-                user = res.toJson()
                 return JsonResponse({ 'code': 0, 'data': user, 'message': '操作成功' })
             else:
                 raise Exception('密码错误')
