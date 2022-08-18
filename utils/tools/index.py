@@ -20,7 +20,7 @@ class Tools:
             # "user": dict(userinfo),
         }, SIGN_KEY, ["HS256"])
 
-        return encoded_jwt
+        return str(encoded_jwt)
 
     def verifySign(token):
         decoded = jwt.decode(token, SIGN_KEY, ["HS256"])
