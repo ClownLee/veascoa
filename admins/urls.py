@@ -5,4 +5,5 @@ urlpatterns = [
     path('add', views.Admins.addAdmin),
     path('update', views.Admins.updateAdmin),
     path('get', views.Admins.getAdmins),
+    path('login', views.Admins.login),
 ]
