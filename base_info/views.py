@@ -123,10 +123,11 @@ class BaseInfo(View):
             baseinfo = models.BaseInfo.objects.get(id=id, uid=uid)
 
             is_master = req.get('is_master')
-            if is_master != None and int(is_master) not in IS_MASTER.keys():
-                raise Exception('请设置正确的是否主数据值')
-            else:
-                baseinfo.is_master = 0 if is_master != None else is_master
+            if is_master != None:
+                if int(is_master) not in IS_MASTER.keys():
+                    raise Exception('请设置正确的是否主数据值')
+                else:
+                    baseinfo.is_master = is_master
 
             avator = req.get('avator')
             if avator != None:
