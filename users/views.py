@@ -163,4 +163,5 @@ class Users(View):
             else:
                 raise Exception('密码错误')
         except Exception as e:
+            print(e)
             return JsonResponse({ 'code': 1, 'data': [], 'message': str(e) })
