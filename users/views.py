@@ -159,7 +159,7 @@ class Users(View):
                 del user['password']
                 del user['salt']
 
-                return JsonResponse({ 'code': 0, 'data': user, 'message': '操作成功' })
+                return JsonResponse({ 'code': 0, 'data': Tools.sign(user), 'message': '操作成功' })
             else:
                 raise Exception('密码错误')
         except Exception as e:

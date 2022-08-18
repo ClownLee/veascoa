@@ -8,4 +8,5 @@
     pip install mysqlclient # 添加 mysql 查询库
     pip install sshtunnel # 添加 mysql 远程链接工具
     pip install django-cors-headers # 跨域处理
+    pip install pyjwt # 签名使用
 ```

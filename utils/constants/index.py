@@ -1,3 +1,5 @@
+SIGN_KEY = "YLRr^Iqy6fTV@^q"
+
 IS_DEL = dict((
     (0, "正常"),
     (1, "删除")
