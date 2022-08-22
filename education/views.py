@@ -139,13 +139,13 @@ class Education(View):
                 if size == None or int(size) <= 0:
                     size = 20
                 
-                res = models.Education.filter(uid=uid, is_del=0).all()[(page - 1) * size : page * size]
+                res = models.Education.objects.filter(uid=uid, is_del=0).all()[(page - 1) * size : page * size]
 
                 lists = []
                 for i in res:
                     lists.append(i.toJson())
 
-                total = models.BaseInfo.objects.count()
+                total = models.Education.objects.count()
                 response = {
                     'page': page,
                     'size': size,
@@ -154,7 +154,7 @@ class Education(View):
                 }
 
             elif id == None or int(id) <= 0:
-                res = models.Education.filter(is_del=0).get(id=id)
+                res = models.Education.objects.filter(is_del=0).get(id=id)
                 response = res.toJson()
             else:
                 page = req.get('page')
@@ -165,13 +165,13 @@ class Education(View):
                 if size == None or int(size) <= 0:
                     size = 20
                 
-                res = models.Education.filter(is_del=0).all()[(page - 1) * size : page * size]
+                res = models.Education.objects.filter(is_del=0).all()[(page - 1) * size : page * size]
 
                 lists = []
                 for i in res:
                     lists.append(i.toJson())
 
-                total = models.BaseInfo.objects.count()
+                total = models.Education.objects.count()
                 response = {
                     'page': page,
                     'size': size,
