@@ -42,11 +42,11 @@ class Education(View):
             
             start_time = req.get('start_time')
             if re.match(r'^[1-2][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$', str(start_time)) == None:
-                raise Exception('请选择出生日期')
+                raise Exception('请选择开始时间')
 
             end_time = req.get('end_time')
             if re.match(r'^[1-2][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$', str(end_time)) == None:
-                raise Exception('请选择出生日期')
+                raise Exception('请选择结束时间')
 
             education = models.Education(
                 uid=uid,
@@ -141,16 +141,16 @@ class Education(View):
                 
                 res = models.Education.filter(uid=uid, is_del=0).all()[(page - 1) * size : page * size]
 
-                json = []
+                lists = []
                 for i in res:
-                    json.append(i.toJson())
+                    lists.append(i.toJson())
 
                 total = models.BaseInfo.objects.count()
                 response = {
                     'page': page,
                     'size': size,
                     'total': total,
-                    'list': json
+                    'list': lists
                 }
 
             elif id == None or int(id) <= 0:
@@ -167,16 +167,16 @@ class Education(View):
                 
                 res = models.Education.filter(is_del=0).all()[(page - 1) * size : page * size]
 
-                json = []
+                lists = []
                 for i in res:
-                    json.append(i.toJson())
+                    lists.append(i.toJson())
 
                 total = models.BaseInfo.objects.count()
                 response = {
                     'page': page,
                     'size': size,
                     'total': total,
-                    'list': json
+                    'list': lists
                 }
 
             return JsonResponse({ 'code': 0, 'data': response, 'message': '请求成功' })
