@@ -16,7 +16,7 @@ class Tools:
             datas.append((attr, value))
 
         return dict(datas)
-        # [(attr, getattr(_self, attr)) for attr in [f.name for f in _self._meta.fields]]
+        # return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
 
     def random(len=5):
         return (''.join(random.sample(['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'], len)))

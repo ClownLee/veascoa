@@ -1,5 +1,5 @@
 from django.db import models
-import json
+from utils.tools.index import Tools
 
 class BaseInfo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -28,4 +28,4 @@ class BaseInfo(models.Model):
         ordering = ('-create_time',)
 
     def toJson(self):
-        return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])
+        return Tools.toJson(self)

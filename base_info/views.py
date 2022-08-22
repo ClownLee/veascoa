@@ -129,6 +129,13 @@ class BaseInfo(View):
                 else:
                     baseinfo.is_master = is_master
 
+            is_del = req.get('is_del')
+            if is_del != None:
+                if int(is_del) not in IS_DEL.keys():
+                    raise Exception('是否删除的参数错误')
+                else:
+                    baseinfo.is_del = is_del
+
             avator = req.get('avator')
             if avator != None:
                 if re.match(r'^http(s)?:\/\/([\w.]+\/?)\S*', avator) == None:
@@ -243,9 +250,9 @@ class BaseInfo(View):
 
     def getBaseInfoList(page, size, uid=None):
         if uid != None:
-            res = models.BaseInfo.objects.filter(uid=uid).all()[(page - 1) * size : page * size]
+            res = models.BaseInfo.objects.filter(uid=uid, is_del=0).all()[(page - 1) * size : page * size]
         else:
-            res = models.BaseInfo.objects.all()[(page - 1) * size : page * size]
+            res = models.BaseInfo.objects.filter(is_del=0).all()[(page - 1) * size : page * size]
         
         json = []
         for i in res:
