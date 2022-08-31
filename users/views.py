@@ -156,6 +156,7 @@ class Users(View):
             if res.password == Tools.md5(password, res.salt):
                 
                 user = dict(res.toJson())
+                print(user)
                 del user['password']
                 del user['salt']
 
