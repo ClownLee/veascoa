@@ -95,17 +95,15 @@ datebase_config = {
     'HOST': '127.0.0.1',
 }
 
-if os.environ['PY_ENV'] != 'production':
-
-    server = SSHTunnelForwarder(
-        ssh_address_or_host='120.48.155.43',  # 跳板机B地址
-        ssh_port=22,  # 跳板机B端口
-        ssh_username='root',
-        ssh_password='Po^hFZuo',
-        remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
-    )
-    server.start()
-    datebase_config['PORT'] = server.local_bind_port
+server = SSHTunnelForwarder(
+   ssh_address_or_host= os.environ['MYSQL_SERVER_HOST'],  # 跳板机B地址 120.48.155.43
+   ssh_port=22,  # 跳板机B端口
+   ssh_username= os.environ['MYSQL_SERVER_USERNAME'],
+   ssh_password= os.environ['MYSQL_SERVER_PASSWORD'],
+   remote_bind_address=('localhost', 3306) # 目标机器A地址，端口
+)
+server.start()
+datebase_config['PORT'] = server.local_bind_port
 
 DATABASES = {
     'default': datebase_config,
