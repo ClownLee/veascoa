@@ -5,7 +5,7 @@
     python manage.py startapp 应用名称 # 在项目中创建子应用
     python manage.py runserver 127.0.0.1:8000 # 启动项目
 
-    pip install mysqlclient # 添加 mysql 查询库
+    pip install mysqlclient # 添加 mysql 查询库 若安装失败，可能是系统没有mysql开发库，需（yum install mysql-devel -y）安装后在 pip install mysqlclient
     pip install sshtunnel # 添加 mysql 远程链接工具
     pip install django-cors-headers # 跨域处理
     pip install pyjwt # 签名使用
