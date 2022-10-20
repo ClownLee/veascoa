@@ -31,13 +31,14 @@ class Tools:
         return hashlib.md5((str(password)+str(salt)).encode()).hexdigest()
 
     def sign(userinfo):
+        
         encoded_jwt = jwt.encode({
-            "exp": str((datetime.datetime.now() + datetime.timedelta(seconds=172800)).strftime('%Y-%m-%d %H:%M:%S')), # 两天后过期
-            "user": dict(userinfo),
-        }, SIGN_KEY, ["HS256"])
+            "exp": int(time.time()) + 2 * 24 * 60 * 5, # 两天后过期
+            "user": userinfo,
+        }, SIGN_KEY, algorithm='HS256')
 
         return encoded_jwt
 
     def verifySign(token):
-        decoded = jwt.decode(token, SIGN_KEY, ["HS256"])
-        print(decoded)
+        decoded = jwt.decode(token, SIGN_KEY, algorithms=["HS256"])
+        return decoded
